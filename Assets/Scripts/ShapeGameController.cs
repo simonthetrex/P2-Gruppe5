@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ShapeGameController : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class ShapeGameController : MonoBehaviour
     [SerializeField] private ShapeButtonRenderer[] shapeRenderers;
     [SerializeField] private TMP_Text targetShapeText;
     [SerializeField] private TMP_Text feedbackText;
+    [SerializeField] private TMP_Text roundButtonText;
+    [SerializeField] private string practiceSceneName = "FormerTælning";
+
+    private bool isRoundActive;
+    private bool hasAnsweredCurrentRound;
 
     private void Awake()
     {
@@ -34,22 +40,28 @@ public class ShapeGameController : MonoBehaviour
         }
 
         SetAnswerButtonsInteractable(false);
+        UpdateRoundButtonLabel();
     }
 
     public void StartRound()
     {
         generator.GenerateShapes();
+        isRoundActive = true;
+        hasAnsweredCurrentRound = false;
         UpdateButtonShapes();
-        targetShapeText.text = $"Find figuren med {generator.GetCorrectShape()} sider";
+        targetShapeText.text = $"Find figuren med {generator.GetCorrectShape()} kanter";
         feedbackText.text = string.Empty;
         SetAnswerButtonsInteractable(true);
+        UpdateRoundButtonLabel();
     }
 
     public void OnShapeClicked(int index)
     {
         bool correct = generator.IsCorrectShape(index);
+        hasAnsweredCurrentRound = true;
         feedbackText.text = correct ? "Rigtigt svar!" : "Forkert svar...";
         SetAnswerButtonsInteractable(false);
+        UpdateRoundButtonLabel();
     }
 
     private void UpdateButtonShapes()
@@ -69,5 +81,26 @@ public class ShapeGameController : MonoBehaviour
         {
             shapeButtons[i].interactable = canClick;
         }
+    }
+
+    public void LoadPracticeScene()
+    {
+        SceneManager.LoadScene(practiceSceneName);
+    }
+
+    private void UpdateRoundButtonLabel()
+    {
+        if (roundButtonText == null)
+        {
+            return;
+        }
+
+        if (!isRoundActive)
+        {
+            roundButtonText.text = "Start";
+            return;
+        }
+
+        roundButtonText.text = hasAnsweredCurrentRound ? "Ny form" : "Spring over";
     }
 }
