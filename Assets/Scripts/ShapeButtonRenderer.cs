@@ -6,10 +6,10 @@ public class ShapeButtonRenderer : MonoBehaviour
 {
     [SerializeField] private RectTransform drawingArea;
     [SerializeField] private float radiusScale = 0.33f;
-    [SerializeField] private float lineThickness = 5f;
-    [SerializeField] private float pointSize = 12f;
+    [SerializeField] private float lineThickness = 12f;
+    [SerializeField] private float pointSize = 28f;
     [SerializeField] private Color lineColor = Color.black;
-    [SerializeField] private Color pointColor = Color.black;
+    [SerializeField] private Color pointColor = Color.red;
 
     private readonly List<GameObject> renderedElements = new List<GameObject>();
 
