@@ -8,11 +8,11 @@ using UnityEngine.UI;
 public class TælningLevels : MonoBehaviour
 {
 
-    public bool answered = false;
-
     public List<int> numbers = new List<int>{1,2,3,4,5};
 
     public List<int> answerIndex = new List<int>{0,0,0,0,0};
+
+    public List<GameObject> visualNumbers = new List<GameObject>{};
 
     public Button[] buttons;
 
@@ -23,6 +23,8 @@ public class TælningLevels : MonoBehaviour
     public int correctAnswerIndex;
     
     private Button lastClickedButton;
+
+    public GameObject visualNumberToGuess;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,6 +46,18 @@ public class TælningLevels : MonoBehaviour
 
         numberToGuess = Random.Range(1, numbers.Count+1);
         correctAnswerIndex = Random.Range(0, answerIndex.Count);
+
+        foreach (GameObject gameObject in visualNumbers)
+        {
+            gameObject.SetActive(true);
+            TextMeshProUGUI visualNumber = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            if (visualNumber.text == numberToGuess.ToString()) 
+            {
+                gameObject.SetActive(false);
+                visualNumberToGuess = gameObject;
+            }
+        }
+
         for (int i = 0; i < answerIndex.Count; i++)
         {
             if (i == correctAnswerIndex)
@@ -80,12 +94,14 @@ public class TælningLevels : MonoBehaviour
         if (clickedText.text == numberToGuess.ToString())
         {
             clickedButton.GetComponent<Image>().color = Color.green;
+            visualNumberToGuess.SetActive(true);
             StartCoroutine(animate(3.0f));
         }
         else
         {
             clickedButton.GetComponent<Image>().color = Color.red;
-            StartCoroutine(animate(3.0f));
+            visualNumberToGuess.SetActive(true);
+            StartCoroutine(animate(3.0f));            
         }
     }
 
