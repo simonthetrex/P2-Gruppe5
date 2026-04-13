@@ -95,12 +95,14 @@ public class TælningLevels : MonoBehaviour
         {
             clickedButton.GetComponent<Image>().color = Color.green;
             visualNumberToGuess.SetActive(true);
+            visualNumberToGuess.GetComponent<TextMeshProUGUI>().color = Color.green;
             StartCoroutine(animate(3.0f));
         }
         else
         {
             clickedButton.GetComponent<Image>().color = Color.red;
             visualNumberToGuess.SetActive(true);
+            visualNumberToGuess.GetComponent<TextMeshProUGUI>().color = Color.red;
             StartCoroutine(animate(3.0f));            
         }
     }
@@ -109,6 +111,7 @@ public class TælningLevels : MonoBehaviour
     {
         numbers.Insert(numberToGuess-1, numberToGuess);
         yield return new WaitForSeconds(time);
+        visualNumberToGuess.GetComponent<TextMeshProUGUI>().color = Color.white;
         NextQuestion();
     }
     // Update is called once per frame
