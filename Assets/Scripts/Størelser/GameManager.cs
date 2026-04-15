@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -11,9 +12,11 @@ public class GameManager : MonoBehaviour
     public Transform numberParent;
     public GameObject numberTokenPrefab;
     public GameObject nextButton; // drag your Next button here
+    public GameObject EndButton;
+    public TextMeshProUGUI RoundText;
 
-    private int round = 0;
-    private int totalRounds = 5;
+    private int round = 1;
+    private int totalRounds = 6;
     private int solvedCount = 0;
 
     void Start()
@@ -34,11 +37,13 @@ public class GameManager : MonoBehaviour
         solvedCount = 0;
         round++;
         nextButton.SetActive(false);
+        RoundText.text = "Runde: " + round.ToString() + " af 5";
 
         if (round >= totalRounds)
         {
             Debug.Log("Game Over!");
-            // TODO: show end screen
+            EndButton.SetActive(true);
+            RoundText.text = "";
             return;
         }
 
@@ -84,5 +89,10 @@ public class GameManager : MonoBehaviour
             obj.GetComponent<DragHandler>().number = n;
             obj.GetComponentInChildren<TextMeshProUGUI>().text = n.ToString();
         }
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
