@@ -22,4 +22,9 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Plusstykker");
     }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
