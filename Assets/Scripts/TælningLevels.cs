@@ -25,6 +25,8 @@ public class TælningLevels : MonoBehaviour
     private Button lastClickedButton;
 
     public GameObject visualNumberToGuess;
+
+    public bool coRoutining;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,6 +41,11 @@ public class TælningLevels : MonoBehaviour
 
     public void NextQuestion()
     {
+        if (coRoutining == true)
+        {
+            return;
+        }
+
         if (lastClickedButton != null)
         {
             lastClickedButton.GetComponent<Image>().color = Color.white;
@@ -88,6 +95,10 @@ public class TælningLevels : MonoBehaviour
 
     public void CheckAnswer(Button clickedButton)
     {
+        if (coRoutining == true)
+        {
+            return;
+        }
         lastClickedButton = clickedButton;
         TextMeshProUGUI clickedText = clickedButton.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -109,9 +120,11 @@ public class TælningLevels : MonoBehaviour
 
     private IEnumerator animate(float time)
     {
+        coRoutining = true;
         numbers.Insert(numberToGuess-1, numberToGuess);
         yield return new WaitForSeconds(time);
         visualNumberToGuess.GetComponent<TextMeshProUGUI>().color = Color.white;
+        coRoutining = false;
         NextQuestion();
     }
     // Update is called once per frame
