@@ -7,12 +7,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public int number;
 
     private Transform originalParent;
-    private Vector3 originalPos;
 
     public void OnBeginDrag(PointerEventData e)
     {
         originalParent = transform.parent;
-        originalPos = transform.position;
         transform.SetParent(transform.root);
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
@@ -28,7 +26,6 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (transform.parent == transform.root)
         {
             transform.SetParent(originalParent);
-            transform.position = originalPos;
         }
     }
 }

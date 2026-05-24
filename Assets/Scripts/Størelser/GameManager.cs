@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public Transform towerParent;
     public Transform numberParent;
     public GameObject numberTokenPrefab;
-    public GameObject nextButton; // drag your Next button here
+    public GameObject nextButton;
     public GameObject EndButton;
     public TextMeshProUGUI RoundText;
 
@@ -75,12 +75,8 @@ public class GameManager : MonoBehaviour
 
         List<int> numbers = new List<int>();
         foreach (Tårne tower in selected)
-            numbers.Add(tower.klodsAmount);
-
-        for (int i = numbers.Count - 1; i > 0; i--)
         {
-            int j = Random.Range(0, i + 1);
-            (numbers[i], numbers[j]) = (numbers[j], numbers[i]);
+            numbers.Add(tower.klodsAmount);
         }
 
         foreach (int n in numbers)
