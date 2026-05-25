@@ -48,9 +48,6 @@ public class GameManager : MonoBehaviour
         }
 
         foreach (Transform child in towerParent) Destroy(child.gameObject);
-        foreach (Transform child in numberParent)
-            if (!child.CompareTag("NextButton"))
-                Destroy(child.gameObject);
 
         towerSpawn();
     }
@@ -81,9 +78,9 @@ public class GameManager : MonoBehaviour
 
         foreach (int n in numbers)
         {
-            GameObject obj = Instantiate(numberTokenPrefab, numberParent, false);
-            obj.GetComponent<DragHandler>().number = n;
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = n.ToString();
+            GameObject numberObject = Instantiate(numberTokenPrefab, numberParent, false);
+            numberObject.GetComponent<DragHandler>().number = n;
+            numberObject.GetComponentInChildren<TextMeshProUGUI>().text = n.ToString();
         }
     }
 
